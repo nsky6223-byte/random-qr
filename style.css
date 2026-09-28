@@ -1,0 +1,122 @@
+/* 기본 리셋 */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg: #14110f;
+  --accent: #c9a24b;   /* 금색 포인트 */
+  --text: #f1e6cf;
+}
+
+/* 결과별 테마 색 */
+body.theme-samurai { --bg: #1a0d0d; --accent: #c0392b; }
+body.theme-knight  { --bg: #0e1424; --accent: #b8c4d6; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  overflow-x: hidden; /* 가로 스크롤 방지 */
+}
+
+body {
+  background: radial-gradient(ellipse at top, color-mix(in srgb, var(--bg) 80%, #fff 8%), var(--bg) 70%);
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Serif KR', serif;
+  transition: background-color .6s ease;
+}
+
+.stage {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+/* ---------- 로딩 ---------- */
+.loading {
+  text-align: center;
+}
+
+.loading[hidden], .result[hidden] { display: none; }
+
+.seal {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #d9b45c, var(--accent) 60%, #6b5320);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--accent) 60%, transparent);
+  animation: pulse 1.1s ease-in-out infinite;
+}
+
+.loading-text {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.dots i {
+  font-style: normal;
+  animation: blink 1.2s infinite;
+}
+.dots i:nth-child(2) { animation-delay: .2s; }
+.dots i:nth-child(3) { animation-delay: .4s; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(.92); opacity: .75; }
+  50%      { transform: scale(1.08); opacity: 1; }
+}
+@keyframes blink {
+  0%, 100% { opacity: .15; }
+  50%      { opacity: 1; }
+}
+
+/* ---------- 결과 ---------- */
+.result {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  animation: fadeIn .9s ease both;
+}
+
+.result-title {
+  margin: 0 0 16px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: .08em;
+}
+
+/* 길게 눌러 저장할 수 있도록 <img> 그대로 사용 */
+.result-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .55), 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.result-error {
+  margin: 24px 0;
+  color: var(--text);
+  opacity: .8;
+}
+
+.hint {
+  margin: 14px 0 0;
+  font-size: .8rem;
+  opacity: .55;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seal, .dots i, .result { animation: none; }
+}
